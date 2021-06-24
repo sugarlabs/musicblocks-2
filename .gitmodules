@@ -1,0 +1,9 @@
+[submodule "project-builder"]
+    path = lib/builder
+    url = https://github.com/sugarlabs/musicblocks-v4-builder-framework.git
+    branch = main
+
+[submodule "engine"]
+    path = lib/engine
+    url = https://github.com/sugarlabs/musicblocks-v4-lib.git
+    branch = main
