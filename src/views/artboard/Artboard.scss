@@ -7,9 +7,19 @@
   height: inherit;
   background: $artboard-background;
 
+  display: grid;
+  align-items: center;
+  justify-content: center;
+
   h4 {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
+  }
+
+  #boards {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
   }
 }
