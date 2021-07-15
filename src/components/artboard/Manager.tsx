@@ -11,28 +11,56 @@ import Artboard from './Artboard';
  */
 export default function (): JSX.Element {
   const [artboardList, setartboardList] = useState([] as IArtboardModel[]);
-
-  const addArtboard = (id: number) => {
-    const newArtboard = new IArtboardModel(id);
-    _ArtboardManagerModel.addArtboard(newArtboard);
-    setartboardList(artboardList.concat(newArtboard));
-  };
+  const [artboardId, setartboardId] = useState<number>();
+  const [currentArtboard, setCurrentArtboard] = useState<IArtboardModel>();
 
   const getArtboards = () => {
     return _ArtboardManagerModel.getArtboards();
   };
 
   useEffect(() => {
+    setartboardList(getArtboards());
+  }, [getArtboards]);
+
+  useEffect(() => {
+    const defaultArtboard = new IArtboardModel(0);
+    let artboard = defaultArtboard;
+    if (artboardList.find((board) => board._id == artboardId)) {
+      artboard = artboardList.find((board) => board._id == artboardId)!;
+    }
+    setartboardId(artboard._id);
+    setCurrentArtboard(artboard);
+  }, [artboardList, artboardId]);
+
+  const addArtboard = (id: number) => {
+    _ArtboardManagerModel.addArtboard(id);
+    setartboardList(getArtboards());
+  };
+
+  const removeArtboard = (id: number) => {
+    _ArtboardManagerModel.removeArtboard(id);
+    setartboardList(getArtboards());
+  };
+
+  useEffect(() => {
     addArtboard(3);
+    addArtboard(5);
+    addArtboard(13);
+    removeArtboard(13);
   }, []);
-  console.log(artboardList);
+
+  /**
+   * Event Handler to set one of the artboard to current Artboard
+   * setCurrentArtboard(currentArtboard);
+   *
+   */
   return (
     <>
       <div id="artboard-manager-wrapper">
         {artboardList.map((board) => (
           <Artboard board={board} />
         ))}
-        ;
+        {/* {currentArtboard && <Artboard board={currentArtboard} />}; */}
       </div>
     </>
   );

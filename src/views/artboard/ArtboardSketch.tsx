@@ -1,7 +1,7 @@
 // -- types ----------------------------------------------------------------------------------------
 
 import p5 from 'p5';
-import { useEffect } from 'react';
+import { useEffect, createRef } from 'react';
 import { getViewportDimensions } from '../../utils/ambience';
 
 // -- model component definition -------------------------------------------------------------------
@@ -41,11 +41,12 @@ export const Sketch = (sketch: p5) => {
  */
 export default function ArtboardSketch(props: { index: number }): JSX.Element {
   /** Stores the value of the auto hide state. */
-
+  const ArtboardSketch = createRef<HTMLDivElement>();
   const id = `art-board-${props.index}`;
   useEffect(() => {
-    new p5(Sketch, document.getElementById(id) as HTMLElement);
+    if (ArtboardSketch.current === null) return;
+    new p5(Sketch, ArtboardSketch.current);
   }, []);
 
-  return <div id={id} />;
+  return <div id={id} ref={ArtboardSketch} />;
 }
