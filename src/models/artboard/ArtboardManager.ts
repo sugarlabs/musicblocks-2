@@ -13,7 +13,7 @@ export default class implements IArtboardManagerModel {
     private _height: number;
     private _width: number;
     private _scale: number;
-    private _artboardList: [IArtboardModel];
+    private _artboardList: IArtboardModel[];
     constructor() {
         this._height = 300;
         this._width = 300;
@@ -46,13 +46,23 @@ export default class implements IArtboardManagerModel {
     }
 
     /** add a new Artboard to the canvas */
-    addArtboard(artboard: IArtboardModel): [IArtboardModel] {
-        this._artboardList.concat(artboard);
+    addArtboard(id: number): IArtboardModel[] {
+        const newArtboard = new IArtboardModel(id);
+        this._artboardList = this._artboardList.concat(newArtboard);
+        return this._artboardList;
+    }
+
+    /** remove an artboard from the canvas */
+    removeArtboard(id: number): IArtboardModel[] {
+        if (this._artboardList.length <= 1) {
+            return this._artboardList;
+        }
+        this._artboardList = this._artboardList.filter((board) => board._id !== id);
         return this._artboardList;
     }
 
     /** returns all artboards */
-    getArtboards(): [IArtboardModel] {
+    getArtboards(): IArtboardModel[] {
         return this._artboardList;
     }
 }

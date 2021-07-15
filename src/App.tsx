@@ -17,7 +17,7 @@ import Manager from './components/artboard/Manager';
 // -- stylesheet -----------------------------------------------------------------------------------
 
 import './App.scss';
-import Palette from './components/palette/Palette';
+// import Palette from './components/palette/Palette';
 
 // -- component definition -------------------------------------------------------------------------
 
